@@ -1,24 +1,21 @@
 """
-library_cli.py
-
-Simple Library Management System with:
-- CLI menu for interactive use
+Definition
+City Library Management System with:
+- Interative Menu for ease of user inputs
 - JSON save/load persistence
-- Sample run script for screenshot-friendly steps
-
-No external libraries required.
+Version:1.0 Author:Bani Assignment:Week4_Graded
 """
 
 import json
 from datetime import datetime
 
-# --- Data stores (in-memory) ---
+# --- Global Records  ---
 books = {}          # book_id -> {id, title, author, genre, available}
 members = {}        # member_id -> {id, name, age, contact, borrowed_books}
 borrow_log = []     # list of {timestamp, member_id, book_id, action}
 genre_popularity = {}  # genre -> times issued
 
-# --- Helpers ---
+
 def _now():
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -30,24 +27,25 @@ def _generate_id(prefix, store):
             return candidate
         i += 1
 
-# --- Persistence ---
+
+
 def save_data(filename="library_data.json"):
-    """Save books, members, borrow_log, and genre_popularity to a JSON file."""
+    """ This function Save books, members, borrow_log, and genre_popularity to a JSON file."""
     payload = {
         "books": books,
         "members": members,
         "borrow_log": borrow_log,
         "genre_popularity": genre_popularity
     }
-    with open(filename, "w", encoding="utf-8") as f:
+    with open(filename, "w") as f:
         json.dump(payload, f, indent=2)
     return filename
 
 def load_data(filename="library_data.json"):
-    """Load data from JSON file into memory. Returns True if loaded, False otherwise."""
+    """ This function Load data from JSON file into memory. Returns True if loaded, False otherwise."""
     global books, members, borrow_log, genre_popularity
     try:
-        with open(filename, "r", encoding="utf-8") as f:
+        with open(filename, "r") as f:
             payload = json.load(f)
         books = {k: v for k, v in payload.get("books", {}).items()}
         members = {k: v for k, v in payload.get("members", {}).items()}
@@ -58,7 +56,7 @@ def load_data(filename="library_data.json"):
     except FileNotFoundError:
         return False
 
-# --- Book functions ---
+#  Book functions to add and check availability
 def add_book(title, author, genre, book_id=None):
     if book_id is None:
         book_id = _generate_id("B", books)
@@ -80,7 +78,7 @@ def update_availability(book_id, available):
     books[book_id]["available"] = bool(available)
     return True
 
-# --- Member functions ---
+#  Library Member record Functions
 def register_member(name, age, contact, member_id=None):
     if member_id is None:
         member_id = _generate_id("M", members)
@@ -95,7 +93,7 @@ def register_member(name, age, contact, member_id=None):
     }
     return member_id
 
-# --- Borrow / Return functions ---
+#  Borrowing and Returning system
 def issue_book(member_id, book_id):
     if member_id not in members:
         return f"Member {member_id} not found."
@@ -132,7 +130,7 @@ def return_book(member_id, book_id):
     })
     return f"Book '{books[book_id]['title']}' returned by {members[member_id]['name']}."
 
-# --- Search and Reports ---
+#  Reports and related queries
 def search_books_by_title_or_author(query):
     q = query.strip().lower()
     results = []
@@ -151,10 +149,15 @@ def members_with_borrowed_books():
 def most_popular_genre():
     if not genre_popularity:
         return (None, 0)
-    genre, count = max(genre_popularity.items(), key=lambda kv: kv[1])
-    if count == 0:
+    max_genre = None
+    max_count = -1
+    for g, cnt in genre_popularity.items():
+        if cnt > max_count:
+            max_genre = g
+            max_count = cnt
+    if max_count <= 0:
         return (None, 0)
-    return (genre, count)
+    return (max_genre, max_count)
 
 def library_summary():
     total_books = len(books)
@@ -172,7 +175,7 @@ def library_summary():
         "most_popular_genre_count": pop_count
     }
 
-# --- Pretty print utilities ---
+# Print Output
 def print_books(book_list):
     if not book_list:
         print("  (No books found.)")
@@ -195,10 +198,10 @@ def print_borrow_log():
     for entry in borrow_log:
         print(f"  {entry['timestamp']} | Member: {entry['member_id']} | Book: {entry['book_id']} | {entry['action']}")
 
-# --- CLI Menu ---
+#  Interactive Menu
 def cli_menu():
     menu = """
-Library CLI Menu
+Please choose from Below library Menu
 1. Add book
 2. Register member
 3. Issue book
@@ -265,65 +268,66 @@ Choose an option: """
             else:
                 print(f"No file named {fname} found.")
         elif choice == "0":
-            print("Exiting. Goodbye.")
+            print("Thank You for Using Library Management System!!\nYou have a  GoodDay.")
             break
         else:
-            print("Invalid option. Try again.")
+            print("Invalid Input. Please Try again.")
 
-# --- Sample run script (screenshot-friendly) ---
-def sample_run_script():
-    """Performs the sample actions step-by-step and prints clear outputs for screenshots."""
-    print("=== Sample Run Script ===")
-    print("Step 1: Add sample books")
-    b1 = add_book("The Hobbit", "J.R.R. Tolkien", "Fantasy")
-    b2 = add_book("A Brief History of Time", "Stephen Hawking", "Science")
-    b3 = add_book("The Fellowship of the Ring", "J.R.R. Tolkien", "Fantasy")
-    print(f"  Added books: {b1}, {b2}, {b3}")
-    print_books([books[b1], books[b2], books[b3]])
-    print("\nStep 2: Register members")
-    m1 = register_member("Alice", 30, "alice@example.com")
-    m2 = register_member("Bob", 22, "bob@example.com")
-    print(f"  Registered members: {m1}, {m2}")
-    print_members([members[m1], members[m2]])
-    print("\nStep 3: Issue and return operations")
-    print("  Issue book B1 to M1:")
-    print("   ->", issue_book(m1, b1))
-    print("  Try issuing same book to M2 (should fail):")
-    print("   ->", issue_book(m2, b1))
-    print("  Issue B2 to M2:")
-    print("   ->", issue_book(m2, b2))
-    print("  Return B1 from M1:")
-    print("   ->", return_book(m1, b1))
-    print("  Issue B1 to M2 now:")
-    print("   ->", issue_book(m2, b1))
-    print("\nStep 4: Searches and reports (for screenshots)")
-    print("  Search 'Tolkien':")
-    print_books(search_books_by_title_or_author("Tolkien"))
-    print("\n  Available Fantasy books:")
-    print_books(available_books_by_genre("Fantasy"))
-    print("\n  Members with borrowed books:")
-    print_members(members_with_borrowed_books())
-    print("\n  Borrow log:")
-    print_borrow_log()
-    print("\n  Library summary:")
-    for k, v in library_summary().items():
-        print(f"   {k}: {v}")
-    print("\nStep 5: Save data to 'sample_output.json'")
-    save_data("sample_output.json")
-    print("  Saved sample state to sample_output.json")
-    print("=== End of Sample Run ===")
+# # --- Sample run script (screenshot-friendly) ---
+# def sample_run_script():
+#     """Performs the sample actions step-by-step and prints clear outputs for screenshots."""
+#     print("=== Sample Run Script ===")
+#     print("Step 1: Add sample books")
+#     b1 = add_book("The Hobbit", "J.R.R. Tolkien", "Fantasy")
+#     b2 = add_book("A Brief History of Time", "Stephen Hawking", "Science")
+#     b3 = add_book("The Fellowship of the Ring", "J.R.R. Tolkien", "Fantasy")
+#     print(f"  Added books: {b1}, {b2}, {b3}")
+#     print_books([books[b1], books[b2], books[b3]])
+#     print("\nStep 2: Register members")
+#     m1 = register_member("Alice", 30, "alice@example.com")
+#     m2 = register_member("Bob", 22, "bob@example.com")
+#     print(f"  Registered members: {m1}, {m2}")
+#     print_members([members[m1], members[m2]])
+#     print("\nStep 3: Issue and return operations")
+#     print("  Issue book B1 to M1:")
+#     print("   ->", issue_book(m1, b1))
+#     print("  Try issuing same book to M2 (should fail):")
+#     print("   ->", issue_book(m2, b1))
+#     print("  Issue B2 to M2:")
+#     print("   ->", issue_book(m2, b2))
+#     print("  Return B1 from M1:")
+#     print("   ->", return_book(m1, b1))
+#     print("  Issue B1 to M2 now:")
+#     print("   ->", issue_book(m2, b1))
+#     print("\nStep 4: Searches and reports (for screenshots)")
+#     print("  Search 'Tolkien':")
+#     print_books(search_books_by_title_or_author("Tolkien"))
+#     print("\n  Available Fantasy books:")
+#     print_books(available_books_by_genre("Fantasy"))
+#     print("\n  Members with borrowed books:")
+#     print_members(members_with_borrowed_books())
+#     print("\n  Borrow log:")
+#     print_borrow_log()
+#     print("\n  Library summary:")
+#     for k, v in library_summary().items():
+#         print(f"   {k}: {v}")
+#     print("\nStep 5: Save data to 'sample_output.json'")
+#     save_data("sample_output.json")
+#     print("  Saved sample state to sample_output.json")
+#     print("=== End of Sample Run ===")
 
 # --- If run as script, show menu and offer to run sample script ---
 if __name__ == "__main__":
-    print("Library Management System")
+    print("===================================")
+    print("Welcome to Library Management System")
+    print("===================================")
+    print()
     print("Options:")
-    print("  1) Run interactive CLI")
-    print("  2) Run sample script (screenshot-friendly)")
-    print("  3) Load data from JSON then run CLI")
-    choice = input("Choose 1, 2 or 3 (default 1): ").strip() or "1"
+    print("  1) Choose your desired action from menu")
+    print("  2) Load data from JSON then run CLI")
+    choice = input("Choose 1 or 2 (default 1): ").strip() or "1"
     if choice == "2":
-        sample_run_script()
-    elif choice == "3":
+
         fname = input("Filename to load (default library_data.json): ").strip() or "library_data.json"
         if load_data(fname):
             print(f"Loaded {fname}. Entering CLI.")
