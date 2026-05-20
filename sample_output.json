@@ -1,0 +1,74 @@
+{
+  "books": {
+    "B1": {
+      "id": "B1",
+      "title": "The Hobbit",
+      "author": "J.R.R. Tolkien",
+      "genre": "fantasy",
+      "available": false
+    },
+    "B2": {
+      "id": "B2",
+      "title": "A Brief History of Time",
+      "author": "Stephen Hawking",
+      "genre": "science",
+      "available": false
+    },
+    "B3": {
+      "id": "B3",
+      "title": "The Fellowship of the Ring",
+      "author": "J.R.R. Tolkien",
+      "genre": "fantasy",
+      "available": true
+    }
+  },
+  "members": {
+    "M1": {
+      "id": "M1",
+      "name": "Alice",
+      "age": 30,
+      "contact": "alice@example.com",
+      "borrowed_books": []
+    },
+    "M2": {
+      "id": "M2",
+      "name": "Bob",
+      "age": 22,
+      "contact": "bob@example.com",
+      "borrowed_books": [
+        "B2",
+        "B1"
+      ]
+    }
+  },
+  "borrow_log": [
+    {
+      "timestamp": "2026-05-20 21:11:31",
+      "member_id": "M1",
+      "book_id": "B1",
+      "action": "issued"
+    },
+    {
+      "timestamp": "2026-05-20 21:11:31",
+      "member_id": "M2",
+      "book_id": "B2",
+      "action": "issued"
+    },
+    {
+      "timestamp": "2026-05-20 21:11:31",
+      "member_id": "M1",
+      "book_id": "B1",
+      "action": "returned"
+    },
+    {
+      "timestamp": "2026-05-20 21:11:31",
+      "member_id": "M2",
+      "book_id": "B1",
+      "action": "issued"
+    }
+  ],
+  "genre_popularity": {
+    "fantasy": 2,
+    "science": 1
+  }
+}
