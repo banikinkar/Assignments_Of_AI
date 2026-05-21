@@ -2,6 +2,7 @@
 Definition
 City Library Management System with:
 - Interative Menu for ease of user inputs
+- Manual Inputs of test data
 - JSON save/load persistence
 Version:1.0 Author:Bani Assignment:Week4_Graded
 """
@@ -273,6 +274,48 @@ Choose an option: """
         else:
             print("Invalid Input. Please Try again.")
 
+#    For Sample data insertion for output
+
+def sample_run_script():
+    print("=== Sample Run Script ===")
+    print("Step 1: Add sample books")
+    b1 = add_book("The Hobbit", "J.R.R. Tolkien", "Fantasy")
+    b2 = add_book("A Brief History of Time", "Stephen Hawking", "Science")
+    b3 = add_book("The Fellowship of the Ring", "J.R.R. Tolkien", "Fantasy")
+    print(f"  Added books: {b1}, {b2}, {b3}")
+    print_books([books[b1], books[b2], books[b3]])
+    print("\nStep 2: Register members")
+    m1 = register_member("Alice", 30, "alice@example.com")
+    m2 = register_member("Bob", 22, "bob@example.com")
+    print(f"  Registered members: {m1}, {m2}")
+    print_members([members[m1], members[m2]])
+    print("\nStep 3: Issue and return operations")
+    print("  Issue book B1 to M1:")
+    print("   ->", issue_book(m1, b1))
+    print("  Try issuing same book to M2 (should fail):")
+    print("   ->", issue_book(m2, b1))
+    print("  Issue B2 to M2:")
+    print("   ->", issue_book(m2, b2))
+    print("  Return B1 from M1:")
+    print("   ->", return_book(m1, b1))
+    print("  Issue B1 to M2 now:")
+    print("   ->", issue_book(m2, b1))
+    print("\nStep 4: Searches and reports (for screenshots)")
+    print("  Search 'Tolkien':")
+    print_books(search_books_by_title_or_author("Tolkien"))
+    print("\n  Available Fantasy books:")
+    print_books(available_books_by_genre("Fantasy"))
+    print("\n  Members with borrowed books:")
+    print_members(members_with_borrowed_books())
+    print("\n  Borrow log:")
+    print_borrow_log()
+    print("\n  Library summary:")
+    for k, v in library_summary().items():
+        print(f"   {k}: {v}")
+    print("\nStep 5: Save data to 'sample_output.json'")
+    save_data("sample_output.json")
+    print("  Saved sample state to sample_output.json")
+    print("=== End of Sample Run ===")
 
 if __name__ == "__main__":
     print("===================================")
@@ -281,10 +324,12 @@ if __name__ == "__main__":
     print()
     print("Options:")
     print("  1) Choose your desired action from menu")
-    print("  2) Load data from JSON then run CLI")
-    choice = input("Choose 1 or 2 (default 1): ").strip() or "1"
+    print("  2) Run sample script (screenshot-friendly)")
+    print("  3) Load data from JSON then run CLI")
+    choice = input("Choose 1 ,2 or 3 (default 1): ").strip() or "1"
     if choice == "2":
-
+        sample_run_script()
+    elif choice == "3":
         fname = input("Filename to load (default library_data.json): ").strip() or "library_data.json"
         if load_data(fname):
             print(f"Loaded {fname}. Entering CLI.")

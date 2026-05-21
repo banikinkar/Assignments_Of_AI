@@ -2,22 +2,22 @@
   "books": {
     "B1": {
       "id": "B1",
-      "title": "The Hobbit",
-      "author": "J.R.R. Tolkien",
-      "genre": "fantasy",
+      "title": "Bhagat Singh",
+      "author": "Rohit",
+      "genre": "History",
       "available": false
     },
     "B2": {
       "id": "B2",
-      "title": "A Brief History of Time",
-      "author": "Stephen Hawking",
-      "genre": "science",
+      "title": "Modern India",
+      "author": "Saikat Mehrul",
+      "genre": "Philosophy",
       "available": false
     },
     "B3": {
       "id": "B3",
-      "title": "The Fellowship of the Ring",
-      "author": "J.R.R. Tolkien",
+      "title": "Arranged Marriage",
+      "author": "Chetan Bhagat",
       "genre": "fantasy",
       "available": true
     }
@@ -25,16 +25,16 @@
   "members": {
     "M1": {
       "id": "M1",
-      "name": "Alice",
-      "age": 30,
-      "contact": "alice@example.com",
+      "name": "Kousthuban",
+      "age": 50,
+      "contact": "Kousthub@gmail.com",
       "borrowed_books": []
     },
     "M2": {
       "id": "M2",
-      "name": "Bob",
+      "name": "Swapna",
       "age": 22,
-      "contact": "bob@example.com",
+      "contact": "Swapna@yahoo.com",
       "borrowed_books": [
         "B2",
         "B1"
