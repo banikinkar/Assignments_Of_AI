@@ -324,7 +324,7 @@ if __name__ == "__main__":
     print()
     print("Options:")
     print("  1) Choose your desired action from menu")
-    print("  2) Run sample script (screenshot-friendly)")
+    print("  2) Run sample script to add data first")
     print("  3) Load data from JSON then run CLI")
     choice = input("Choose 1 ,2 or 3 (default 1): ").strip() or "1"
     if choice == "2":
