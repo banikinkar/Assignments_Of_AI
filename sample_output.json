@@ -4,14 +4,14 @@
       "id": "B1",
       "title": "Bhagat Singh",
       "author": "Rohit",
-      "genre": "History",
+      "genre": "history",
       "available": false
     },
     "B2": {
       "id": "B2",
       "title": "Modern India",
       "author": "Saikat Mehrul",
-      "genre": "Philosophy",
+      "genre": "philosophy",
       "available": false
     },
     "B3": {
@@ -27,14 +27,14 @@
       "id": "M1",
       "name": "Kousthuban",
       "age": 50,
-      "contact": "Kousthub@gmail.com",
+      "contact": "kousthub@gmail.com",
       "borrowed_books": []
     },
     "M2": {
       "id": "M2",
       "name": "Swapna",
       "age": 22,
-      "contact": "Swapna@yahoo.com",
+      "contact": "swapna@yahoo.com",
       "borrowed_books": [
         "B2",
         "B1"
@@ -43,32 +43,33 @@
   },
   "borrow_log": [
     {
-      "timestamp": "2026-05-20 21:11:31",
+      "timestamp": "2026-05-21 09:03:10",
       "member_id": "M1",
       "book_id": "B1",
       "action": "issued"
     },
     {
-      "timestamp": "2026-05-20 21:11:31",
+      "timestamp": "2026-05-21 09:03:10",
       "member_id": "M2",
       "book_id": "B2",
       "action": "issued"
     },
     {
-      "timestamp": "2026-05-20 21:11:31",
+      "timestamp": "2026-05-21 09:03:10",
       "member_id": "M1",
       "book_id": "B1",
       "action": "returned"
     },
     {
-      "timestamp": "2026-05-20 21:11:31",
+      "timestamp": "2026-05-21 09:03:10",
       "member_id": "M2",
       "book_id": "B1",
       "action": "issued"
     }
   ],
   "genre_popularity": {
-    "fantasy": 2,
-    "science": 1
+    "history": 2,
+    "philosophy": 1,
+    "fantasy": 0
   }
 }
