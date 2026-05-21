@@ -1,3 +1,4 @@
+"""test how matplotlib works"""
 import matplotlib.pyplot as plt
 
 cities = ["Los Angeles", "San Francisco", "New York", "Houston", "Chicago"]
