@@ -1,7 +1,6 @@
 """
 Retail Transactions Analysis Project
 ------------------------------------
-
 This program analyzes a nationwide retail chain's transaction dataset
 to uncover customer behaviour, promotional impact, and seasonal trends.
 
