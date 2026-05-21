@@ -30,6 +30,7 @@ This ensures the analysis is reproducible, easy to understand,
 and avoids heavy dependencies, making it suitable for graded assignments.
 
 Version:1.0 Author:Bani Assignment:Week4_Graded
+Visualisation part : Referred from AI and google
 
 """
 
@@ -38,7 +39,7 @@ from datetime import datetime
 from collections import Counter, defaultdict
 import matplotlib.pyplot as plt
 
-# ---------- Task 1: Data Preparation ----------
+#  Data Preparation
 def load_and_prepare_data(filename):
     data = []
     with open(filename, 'r', encoding='utf-8') as f:
@@ -56,7 +57,7 @@ def load_and_prepare_data(filename):
             data.append(row)
     return data
 
-# ---------- Task 2: Basic Exploration ----------
+# Basic Exploration
 def basic_exploration(data):
     total_transactions = len(data)
     unique_customers = len(set(d['Customer_Name'] for d in data))
@@ -64,7 +65,6 @@ def basic_exploration(data):
     city_counter = Counter()
 
     for d in data:
-        # Products are stored like "['Milk','Bread']" → clean them
         products = d['Product'].strip("[]").replace("'", "").split(",")
         product_counter.update([p.strip() for p in products])
         city_counter[d['City']] += 1
@@ -74,7 +74,7 @@ def basic_exploration(data):
     print("Top 5 Products:", product_counter.most_common(5))
     print("Cities with most transactions:", city_counter.most_common(5))
 
-# ---------- Task 3: Customer Behaviour ----------
+# Customer Behaviour
 def customer_behaviour(data):
     spend_by_category = defaultdict(list)
     payment_by_category = defaultdict(Counter)
@@ -94,7 +94,7 @@ def customer_behaviour(data):
     for store, items in items_by_store.items():
         print(f"{store} avg items: {sum(items)/len(items):.2f}")
 
-# ---------- Task 4: Promotion & Discount ----------
+# Promotion & Discount
 def promotion_discount(data):
     discount_spend = [d['Total_Cost'] for d in data if d['Discount_Applied'].upper() == "TRUE"]
     no_discount_spend = [d['Total_Cost'] for d in data if d['Discount_Applied'].upper() == "FALSE"]
@@ -113,7 +113,7 @@ def promotion_discount(data):
     for promo, costs in promo_cost.items():
         print(f"{promo} avg cost: {sum(costs)/len(costs):.2f}")
 
-# ---------- Task 5: Seasonality ----------
+#  Seasonality
 def seasonality(data):
     revenue_by_season = defaultdict(float)
     for d in data:
@@ -125,7 +125,7 @@ def seasonality(data):
     plt.title("Average Spending per Season")
     plt.show()
 
-# ---------- Task 6: Visualisation Dashboard ----------
+#  Visualisation Dashboard
 def dashboard(data):
     # Transactions per city
     city_counter = Counter(d['City'] for d in data)
